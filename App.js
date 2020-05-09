@@ -76,12 +76,11 @@ export default class App extends Component{
                 cart.push(hamburger.name + ": " + hamburger.qtd);
             }
         }
-        return cart;
+        return cart.length===0?["Não foi adicionado\nnenhum item!"]:cart;
     }
 
     //método obrigatório (fiz igual nas aulas)
     render(){
-        this.showCart();
         return (
             <View style={styles.container}>
                 <FlatList contentContainerStyle={styles.list}
@@ -240,6 +239,7 @@ const styles = StyleSheet.create({
     //View: fundo transparente
     transparentBg:{
         position: "absolute",
+        flex: 1,
         height: "100%",
         width: "100%",
         backgroundColor: "transparent",
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     //Veiw: mensagem de confirmação
     confirmCart:{
         width: "80%",
-        minHeight: "45%",
+        minHeight: "60%",
         backgroundColor: "#ccc",
         borderRadius: 8,
         borderColor: "#fff",
@@ -266,10 +266,10 @@ const styles = StyleSheet.create({
 
     //Text: Adicionado com Sucesso!
     confirmText:{
-        //marginTop: 20,
         fontSize: 16,
         fontWeight: "bold",
         alignSelf: "center",
+        textAlign: "center"
     },
 
     //TouchableOpacity: botão voltar e finalizar
