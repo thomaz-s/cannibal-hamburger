@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity, Image} from 'react-native';
 import {hamburger} from './menu.json';
 
 export default class App extends Component{
@@ -7,7 +7,7 @@ export default class App extends Component{
     //Variável global estado
     state = {
         hamburger: [],
-        showConfirm: false
+        showSideMenu: false
     };
     
     //Executando assim que o componente é montado (fiz igual na aula)
@@ -23,27 +23,23 @@ export default class App extends Component{
     //Renderiza os itens da FlatList
     renderItem = ({item}) => (
         <View style={styles.productContainer}>
-            <Text style={styles.productTitle}>{item.name}</Text>
-            <Text style={styles.productIngredients}>{item.ingredients}</Text>
-            <Text style={styles.productPrice}>{item.price}</Text>
             
-            <View style={styles.qtdSection}>
-                <View style={styles.selectQtd}>
-                    <TouchableOpacity style={styles.buttonQtd} onPress={()=>{this.decreaseItem(parseInt(item._id)-1)}}>
-                        <Text style={styles.minusSignal}>-</Text>
-                    </TouchableOpacity>
-                    <View style={styles.viewQtd}>
-                        <Text style={styles.textQtd}>{item.qtd}</Text>
-                    </View>
-                    <TouchableOpacity style={styles.buttonQtd} onPress={()=>{this.increaseItem(parseInt(item._id)-1)}}>
-                        <Text style={styles.plusSignal}>+</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <TouchableOpacity style={styles.buttonAdd} onPress={()=>{this.toggleConfirm(true)}}>
-                    <Text style={styles.productButtonText}>Adicionar</Text>
+            <View style={styles.productDescripion}>
+                <Text style={styles.productTitle}>{item.name}</Text>
+                <Text style={styles.productIngredients}>{item.ingredients}</Text>
+                <Text style={styles.productPrice}>{item.price}</Text>
+            </View>
+            
+            <View style={styles.selectQtd}>
+                <TouchableOpacity style={styles.buttonQtd} onPress={()=>{this.increaseItem(parseInt(item._id)-1)}}>
+                    <Text style={styles.plusSignal}>+</Text>
                 </TouchableOpacity>
-
+                <View style={styles.viewQtd}>
+                    <Text style={styles.textQtd}>{item.qtd}</Text>
+                </View>
+                <TouchableOpacity style={styles.buttonQtd} onPress={()=>{this.decreaseItem(parseInt(item._id)-1)}}>
+                    <Text style={styles.minusSignal}>-</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -64,11 +60,11 @@ export default class App extends Component{
     }
 
     //fazer a confirmação aparecer ou sumir
-    toggleConfirm(showConfirm){
-        this.setState({showConfirm});
+    toggleSideMenu(showSideMenu){
+        this.setState({showSideMenu});
     }
 
-    showCart(){
+    calcCart(){
         const total = this.state.hamburger;
         let cart = [];
         for (var hamburger of total){
@@ -81,29 +77,31 @@ export default class App extends Component{
 
     //método obrigatório (fiz igual nas aulas)
     render(){
-        this.showCart();
+        this.calcCart();
         return (
             <View style={styles.container}>
+                <View style={styles.header}>
+                    <Image source={require('./menu.png')} onPress={()=>{this.toggleSideMenu(true)}}/>
+                    <Text style={styles.headerText}>Cannibal Hamburger</Text>
+                </View>
                 <FlatList contentContainerStyle={styles.list}
                 data={this.state.hamburger}
                 keyExtractor={item=>item._id}
                 renderItem={this.renderItem}/>
-                <View style={this.state.showConfirm?styles.transparentBg:styles.deleteConfirm}>
-                    <View style={styles.confirmCart}>
+                    <View style={this.state.showSideMenu?styles.confirmCart:styles.deleteConfirm}>
                         
                         <Text style={styles.confirmText}>Adicionado com Sucesso!</Text>
-                        <Text style={styles.confirmText}>{this.showCart().join("\n")}</Text>
+                        <Text style={styles.confirmText}>{this.calcCart().join("\n")}</Text>
                         
                         <TouchableOpacity style={styles.cartButtons} onPress={()=>{}}>
                             <Text style={styles.buttonBackText}>Finalizar Pedido</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.cartButtons} onPress={()=>{this.toggleConfirm(false)}}>
+                        <TouchableOpacity style={styles.cartButtons} onPress={()=>{this.toggleSideMenu(false)}}>
                             <Text style={styles.buttonBackText}>Voltar</Text>
                         </TouchableOpacity>
 
                     </View>
-                </View>
             </View>
         );
     }
@@ -118,6 +116,23 @@ const styles = StyleSheet.create({
         backgroundColor: "#111",
     },
 
+    //View: Imagem de menu e título
+    header:{
+        height: 60,
+        position: "relative",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderColor: "#000",
+        padding: 5
+    },
+
+    //Text: texto cannibal hamburger
+    headerText:{
+        color: "#FFF",
+        width: "70%"
+    },
+
     //FlatList: Lista em si, não o conteúdo
     list:{
         padding: 10
@@ -129,8 +144,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#888',
         borderRadius: 3,
-        padding: 25,
-        marginBottom: 15
+        padding: 20,
+        marginBottom: 15,
+        flexDirection: "row",
+    },
+
+    //View: onde fica o tílutlo, ingredientes e preço
+    productDescripion:{
+        width: "80%"
     },
 
     //Text: nome do hambúrguer
@@ -156,25 +177,17 @@ const styles = StyleSheet.create({
         lineHeight: 20
     },
 
-    //View: com os botões +, -, Adicionar e a viewQtd
-    qtdSection:{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center"
-    },
-
     //View: com os botões +, - e a viewQtd
     selectQtd:{
-        flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "center",
         alignItems: "center",
-        width: "50%"
+        width: "20%"
     },
 
     //View: quadrado com a quantidade
     viewQtd:{
-        height: 40,
-        width: 40,
+        height: 35,
+        width: 35,
         borderRadius: 2,
         borderWidth: 1,
         borderColor: '#888',
@@ -192,8 +205,8 @@ const styles = StyleSheet.create({
 
     //TouchableOpacity + e -
     buttonQtd:{
-        height: 42,
-        width: 42,
+        height: 38,
+        width: 38,
         borderRadius: 3,
         borderWidth: 1,
         borderColor: '#888',
