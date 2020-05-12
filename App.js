@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity, Image} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView} from 'react-native';
 import {hamburger} from './menu.json';
 
 export default class App extends Component{
@@ -7,7 +7,9 @@ export default class App extends Component{
     //Variável global estado
     state = {
         hamburger: [],
-        showSideMenu: false
+        showCart: true,
+        padding: [],
+        obs: ""
     };
     
     //Executando assim que o componente é montado (fiz igual na aula)
@@ -30,14 +32,14 @@ export default class App extends Component{
                 <Text style={styles.productPrice}>{item.price}</Text>
             </View>
             
-            <View style={styles.selectQtd}>
-                <TouchableOpacity style={styles.buttonQtd} onPress={()=>{this.increaseItem(parseInt(item._id)-1)}}>
+            <View style={styles.qtdContainer}>
+                <TouchableOpacity style={styles.qtdButton} onPress={()=>{this.increaseItem(parseInt(item._id)-1)}}>
                     <Text style={styles.plusSignal}>+</Text>
                 </TouchableOpacity>
-                <View style={styles.viewQtd}>
+                <View style={styles.qtdBox}>
                     <Text style={styles.textQtd}>{item.qtd}</Text>
                 </View>
-                <TouchableOpacity style={styles.buttonQtd} onPress={()=>{this.decreaseItem(parseInt(item._id)-1)}}>
+                <TouchableOpacity style={styles.qtdButton} onPress={()=>{this.decreaseItem(parseInt(item._id)-1)}}>
                     <Text style={styles.minusSignal}>-</Text>
                 </TouchableOpacity>
             </View>
@@ -59,19 +61,28 @@ export default class App extends Component{
         this.setState({hamburger});
     }
 
-    //fazer a confirmação aparecer ou sumir
-    toggleSideMenu(showSideMenu){
-        this.setState({showSideMenu});
+    //fazer o carrinho aparecer ou sumir
+    toggleSideMenu(showCart){
+        this.setState({showCart});
     }
 
     calcCart(){
         const total = this.state.hamburger;
         let cart = [];
+
         for (var hamburger of total){
             if (hamburger.qtd != "0"){
                 cart.push(hamburger.name + ": " + hamburger.qtd);
             }
         }
+
+        if (cart.length < 1){
+            for (var i = 0; i<7; i++){
+                cart.push("");
+            }
+            cart[2] = "Você não adicionou nenhum item!";
+        }
+
         return cart;
     }
 
@@ -79,29 +90,36 @@ export default class App extends Component{
     render(){
         this.calcCart();
         return (
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <Image source={require('./menu.png')} onPress={()=>{this.toggleSideMenu(true)}}/>
-                    <Text style={styles.headerText}>Cannibal Hamburger</Text>
-                </View>
-                <FlatList contentContainerStyle={styles.list}
-                data={this.state.hamburger}
-                keyExtractor={item=>item._id}
-                renderItem={this.renderItem}/>
-                    <View style={this.state.showSideMenu?styles.confirmCart:styles.deleteConfirm}>
-                        
-                        <Text style={styles.confirmText}>Adicionado com Sucesso!</Text>
-                        <Text style={styles.confirmText}>{this.calcCart().join("\n")}</Text>
-                        
+            <View style={styles.totalContainer}>
+                <ScrollView style={this.state.showCart?styles.cart:styles.delete}>
+                    <Text style={styles.cartText}>{`Seu pedido: \n\n${this.calcCart().join("\n")}`}</Text>
+                    <TextInput style={styles.obsInput}
+                    onChangeText={obs => {this.setState({obs})}}
+                    multiline={true}/>
+                    <View style={styles.groupButtons}>
                         <TouchableOpacity style={styles.cartButtons} onPress={()=>{}}>
-                            <Text style={styles.buttonBackText}>Finalizar Pedido</Text>
+                            <Text style={styles.cartButtonText}>Enviar Pedido</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.cartButtons} onPress={()=>{}}>
+                            <Text style={styles.cartButtonText}>Imprimir</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.cartButtons} onPress={()=>{this.toggleSideMenu(false)}}>
-                            <Text style={styles.buttonBackText}>Voltar</Text>
+                            <Text style={styles.cartButtonText}>Voltar</Text>
                         </TouchableOpacity>
-
                     </View>
+                </ScrollView>
+
+                <FlatList contentContainerStyle={this.state.showCart?styles.delete:styles.list}
+                data={this.state.hamburger}
+                keyExtractor={item=>item._id}
+                renderItem={this.renderItem}/>
+
+                <View style={this.state.showCart?styles.delete:styles.footer}>
+                    <Text style={styles.headerText} onPress={()=>{this.toggleSideMenu(true)}}>Finalizar Pedido</Text>
+                </View>
+
             </View>
         );
     }
@@ -111,26 +129,31 @@ export default class App extends Component{
 const styles = StyleSheet.create({
 
     //Plano de fundo
-    container:{
+    totalContainer:{
         flex: 1,
         backgroundColor: "#111",
     },
 
-    //View: Imagem de menu e título
-    header:{
+    //View: footer com finalizar pedido
+    footer:{
         height: 60,
         position: "relative",
+        bottom: 0,
         flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center",
         borderColor: "#000",
-        padding: 5
+        padding: 5,
+        flexDirection: "row",
+        justifyContent: "center"
     },
 
-    //Text: texto cannibal hamburger
+    //Text: texto finalizar pedido
     headerText:{
         color: "#FFF",
-        width: "70%"
+        height: "100%",
+        width: "100%",
+        textAlign: "center",
+        textAlignVertical: "center"
     },
 
     //FlatList: Lista em si, não o conteúdo
@@ -178,14 +201,14 @@ const styles = StyleSheet.create({
     },
 
     //View: com os botões +, - e a viewQtd
-    selectQtd:{
+    qtdContainer:{
         justifyContent: "center",
         alignItems: "center",
         width: "20%"
     },
 
     //View: quadrado com a quantidade
-    viewQtd:{
+    qtdBox:{
         height: 35,
         width: 35,
         borderRadius: 2,
@@ -204,7 +227,7 @@ const styles = StyleSheet.create({
     },
 
     //TouchableOpacity + e -
-    buttonQtd:{
+    qtdButton:{
         height: 38,
         width: 38,
         borderRadius: 3,
@@ -250,42 +273,46 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
 
-    //View: fundo transparente
-    transparentBg:{
-        position: "absolute",
-        height: "100%",
-        width: "100%",
-        backgroundColor: "transparent",
-        alignItems: "center",
-        justifyContent: "center"
-    },
-
-    //Veiw: mensagem de confirmação
-    confirmCart:{
-        width: "80%",
-        minHeight: "45%",
+    //ScrollVeiw: mensagem de confirmação
+    cart:{
         backgroundColor: "#ccc",
         borderRadius: 8,
         borderColor: "#fff",
         borderWidth: 3,
-        justifyContent: "space-evenly",
-        alignItems: "center"
     },
 
-    //View: desaparecer mensagem de confirmação
-    deleteConfirm:{
+    //View: desaparecer um elemento
+    delete:{
         display: "none"
     },
 
-    //Text: Adicionado com Sucesso!
-    confirmText:{
-        //marginTop: 20,
+    //Text: Adicionado com Sucesso e itens pedidos!
+    cartText:{
+        lineHeight: 24,
         fontSize: 16,
         fontWeight: "bold",
         alignSelf: "center",
+        margin: 10,
+        alignSelf: "center",
     },
 
-    //TouchableOpacity: botão voltar e finalizar
+    //InputText: observações
+    obsInput: {
+        backgroundColor: "#fff",
+        width: "80%",
+        height: 200,
+        margin: 10,
+        alignSelf: "center",
+        textAlignVertical: "top",
+    },
+
+    //View: grupo dos botões
+    groupButtons:{
+        margin: 10,
+        alignItems: "center",
+    },
+
+    //TouchableOpacity: botão voltar, imprimir e finalizar
     cartButtons:{
         alignItems: "center",
         justifyContent: "center",
@@ -293,11 +320,12 @@ const styles = StyleSheet.create({
         width: "70%",
         backgroundColor: "#bbb",
         borderWidth: 1,
-        borderRadius: 4
+        borderRadius: 4,
+        marginTop: 10
     },
 
     //Text: Voltar
-    buttonBackText:{
+    cartButtonText:{
         fontSize: 16,
         color: "#000",
         fontWeight: "bold"
