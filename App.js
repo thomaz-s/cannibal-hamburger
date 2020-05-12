@@ -111,7 +111,7 @@ export default class App extends Component{
 //Estilização
 const styles = StyleSheet.create({
 
-    //Plano de fundo
+    //View: Plano de fundo
     container:{
         flex: 1,
         backgroundColor: "#111",
