@@ -149,15 +149,8 @@ const styles = StyleSheet.create({
 
     //ScrollVeiw: mensagem de confirmação
     cart:{
-        backgroundColor: "#ccc",
-        borderRadius: 8,
-        borderColor: "#fff",
-        borderWidth: 3,
-    },
-
-    //View: desaparecer um elemento
-    delete:{
-        display: "none"
+        backgroundColor: "#999",
+        flex: 1
     },
 
     //Text: Adicionado com Sucesso e itens pedidos!
