@@ -1,19 +1,30 @@
 {
     "hamburger": [
         {   
-            "_id": "1",
+            "_id": "0",
             "name": "Nativo",
             "ingredients": "Pão especial, carne artesanal, queijo empanado, repolho fresco e cheddar cremoso",
             "price": "R$ 10,00",
+            "numericPrice": "10",
+            "qtd": "2"
+        },
+
+        {
+            "_id": "1",
+            "name": "Ancião",
+            "ingredients": "Pão especial, carne artesanal, ovo com orégano, cebola empanada e repolho fresco",
+            "price": "R$ 10,00",
+            "numericPrice": "10",
             "qtd": "0"
         },
 
         {
             "_id": "2",
-            "name": "Ancião",
-            "ingredients": "Pão especial, carne artesanal, ovo com orégano, cebola empanada e repolho fresco",
-            "price": "R$ 10,00",
-            "qtd": "0"
+            "name": "Canibal",
+            "ingredients": "Pão especial, carne artesanal, queijo coalho, bacon crocante, ovo, cheddar cremoso e repolho fresco",
+            "price": "R$ 8,00",
+            "numericPrice": "1",
+            "qtd": "1"
         },
 
         {
@@ -21,6 +32,7 @@
             "name": "Nômade",
             "ingredients": "Pão especial, carne artesanal, queijo coalho, bacon crocante, ovo, cheddar cremoso e repolho fresco",
             "price": "R$ 8,00",
+            "numericPrice": "8",
             "qtd": "0"
         },
 
@@ -29,6 +41,7 @@
             "name": "Pupilo",
             "ingredients": "Pão especial, carne artesanal, queijo coalho, carne seca, cheddar cremoso e repolho fresco",
             "price": "R$ 8,00",
+            "numericPrice": "8",
             "qtd": "0"
         },
 
@@ -37,6 +50,7 @@
             "name": "Bacon Pork",
             "ingredients": "Pão especial, carne artesanal ,fatias de bacon crocante, cheddar cremoso e repolho fresco",
             "price": "R$ 6,00",
+            "numericPrice": "6",
             "qtd": "0"
         },
 
@@ -45,14 +59,7 @@
             "name": "Egg Especial",
             "ingredients": "Pão especial, carne artesanal, ovo com orégano, cheddar cremoso e repolho fresco",
             "price": "R$ 7,00",
-            "qtd": "0"
-        },
-
-        {
-            "_id": "7",
-            "name": "Canibal",
-            "ingredients": "Pão especial, carne artesanal, queijo coalho, bacon crocante, ovo, cheddar cremoso e repolho fresco",
-            "price": "R$ 8,00",
+            "numericPrice": "7",
             "qtd": "0"
         }
     ]
