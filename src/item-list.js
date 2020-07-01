@@ -12,7 +12,7 @@ export function ItemList({navigation}){
                 renderItem={
                     ({item}) => {
                         return(
-                            <TouchableOpacity style={styles.itemContainer} onPress={()=>{navigation.goBack()}}>
+                            <TouchableOpacity style={styles.itemContainer} onPress={()=>{navigation.navigate('ItemDetails')}}>
                                 <View style={styles.nameAndPrice}>
                                     <Text style={styles.textNameAndPrice}>{item.name}</Text>
                                     <Text style={styles.textNameAndPrice}>{`R$ ${item.price},00`}</Text>
