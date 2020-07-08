@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 const menu = require('./menu.json');
 
 export function HomeScreen({ navigation }) {
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.totalContainer} contentContainerStyle={styles.container}>
             <TouchableOpacity style={styles.itemType} onPress={()=>{navigation.navigate('ItemList')}}>
                 <Image source={require('./icons_not_free/hamburguer.png')} alt="hamburguer" style={styles.foodIcons}/>
                 <Text style={styles.itemName}>Hamburgers</Text>
@@ -20,16 +21,17 @@ export function HomeScreen({ navigation }) {
                 <Image source={require('./icons_not_free/drinks.png')} alt="drinks" style={styles.foodIcons}/>
                 <Text style={styles.itemName}>Bebidas</Text>
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
+    totalContainer:{
+        flex: 1,
+        backgroundColor: "#000",
+    },
 
     container:{
-        flex: 1,
-        backgroundColor: "#111",
-        justifyContent: "space-evenly",
         alignItems: "center"
     },
 
@@ -42,7 +44,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 24
+        paddingHorizontal: 24,
+        marginVertical: 10
     },
 
     foodIcons:{
