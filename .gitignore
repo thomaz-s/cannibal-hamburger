@@ -59,4 +59,4 @@ buck-out/
 /ios/Pods/
 
 #third party icons
-/src/icons_not_free/*.png
+/src/icons/not_free/*.png
