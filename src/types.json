@@ -1,0 +1,19 @@
+[
+    {
+        "id": "0",
+        "type": "Hamburgers",
+        "img": "../icons/not_free/hamburguer.png"
+    },
+
+    {
+        "id": "1",
+        "type": "Sushi",
+        "img": "../icons/not_free/sushi.png"
+    },
+
+    {
+        "id": "2",
+        "type": "Bebidas",
+        "img": "../icons/not_free/drinks.png"
+    }
+]

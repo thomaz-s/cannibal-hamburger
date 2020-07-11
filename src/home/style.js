@@ -11,7 +11,6 @@ const style = StyleSheet.create({
     },
 
     itemType:{
-        height: 128,
         width: "80%",
         borderWidth: 2,
         borderRadius: 3,
@@ -19,7 +18,7 @@ const style = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 24,
+        padding: 24,
         marginVertical: 10
     },
 

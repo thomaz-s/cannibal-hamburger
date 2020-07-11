@@ -3,48 +3,55 @@
         "id": "0",
         "name": "Nativo",
         "ingredients": "Pão especial, carne artesanal, queijo empanado, repolho fresco e cheddar cremoso",
-        "price": 10
+        "price": 10,
+        "type": "0"
     },
 
     {
         "id": "1",
         "name": "Ancião",
         "ingredients": "Pão especial, carne artesanal, ovo com orégano, cebola empanada e repolho fresco",
-        "price": 10
+        "price": 10,
+        "type": "0"
     },
 
     {
         "id": "2",
         "name": "Canibal",
         "ingredients": "Pão especial, carne artesanal, queijo coalho, bacon crocante, ovo, cheddar cremoso e repolho fresco",
-        "price": 8
+        "price": 8,
+        "type": "0"
     },
 
     {
         "id": "3",
         "name": "Nômade",
         "ingredients": "Pão especial, carne artesanal, queijo coalho, bacon crocante, ovo, cheddar cremoso e repolho fresco",
-        "price": 8
+        "price": 8,
+        "type": "0"
     },
 
     {
         "id": "4",
         "name": "Pupilo",
         "ingredients": "Pão especial, carne artesanal, queijo coalho, carne seca, cheddar cremoso e repolho fresco",
-        "price": 8
+        "price": 8,
+        "type": "0"
     },
 
     {
         "id": "5",
         "name": "Bacon Pork",
         "ingredients": "Pão especial, carne artesanal ,fatias de bacon crocante, cheddar cremoso e repolho fresco",
-        "price": 6
+        "price": 6,
+        "type": "0"
     },
 
     {
         "id": "6",
         "name": "Egg Especial",
         "ingredients": "Pão especial, carne artesanal, ovo com orégano, cheddar cremoso e repolho fresco",
-        "price": 7
+        "price": 7,
+        "type": "0"
     }
 ]
